@@ -9,3 +9,16 @@ engines:
     cache: 0
     syntax: Kolon
     suffix: 'tt'
+
+plugins:
+  Database:
+    driver:   'mysql'
+    database: 'uatu'
+    host:     'localhost'
+    port:     3306
+    username: 'vegrev'
+    password: 'password'
+    dbi_params:
+        RaiseError: 1
+        AutoCommit: 1
+    on_connect_do: ["SET NAMES 'utf8'", "SET CHARACTER SET 'utf8'" ]

@@ -1,0 +1,14 @@
+<h1>Search</h1>
+
+
+<ol>
+: for $messages.values() -> $message {
+
+    <li class="<: $message['nick'] :> y2011 m10 d04">
+        <time datetime=""><: $message['time'] :></time>
+        <cite class="nick <: $message['nick'] :>"><: $message['nick'] :></cite>
+        <p class="message"><: $message['message'] :></p>
+    </li>
+
+: }
+</ol>
