@@ -25,28 +25,31 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
 
     # hash is a meta char in urls so it's not used directly
     # add it back here because it does have semantic value
+    my $url_channel = $channel;
     $channel = '#'.$channel;
 
-    my $sth = database->prepare(
-        q{
-            SELECT id, TIME(sent) as time, DATE(sent) as date, nick, message
-            FROM logs
-            WHERE channel = ?
-            AND sent BETWEEN TIMESTAMP(?) AND TIMESTAMPADD(DAY, 1, ?)
-            ORDER BY sent DESC
-            LIMIT 999
-        }
-    );
+    my $sth = database->prepare(q{
+        SELECT id, TIME(sent) as time, DATE(sent) as date, nick, message,
+            CASE 
+                WHEN emote IS NOT NULL THEN 'emote'
+            END AS emote
+        FROM logs
+        WHERE channel = ?
+        AND sent BETWEEN TIMESTAMP(?) AND TIMESTAMPADD(DAY, 1, ?)
+        ORDER BY sent DESC
+        LIMIT 999
+    });
 
     $sth->execute($channel, $date, $date);
     my $messages = $sth->fetchall_hashref('id');
     my %nicks = map { $_->{'nick'} => 1 } values $messages;
 
     template 'log', {
-        channel  => $channel,
-        date     => $date,
-        messages => $messages,
-        nicks    => [keys %nicks],
+        channel      => $channel,
+        url_channel  => $url_channel,
+        date         => $date,
+        messages     => $messages,
+        nicks        => [keys %nicks],
     };
 };
 

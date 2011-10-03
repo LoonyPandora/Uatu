@@ -5,8 +5,8 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="<: $settings.charset :>" />
-    <title>Uatu - The Watcher</title>
-    <meta name="description" content="Uatu - The Watcher">
+    <title>IRC Logs For <: $channel :> – <: $date :> – Uatu The Watcher</title>
+    <meta name="description" content="IRC Logs For <: $channel :> – <: $date :> – Uatu The Watcher">
     <meta name="author" content="James Aitken">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

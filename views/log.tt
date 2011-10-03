@@ -2,7 +2,7 @@
     <div class="topbar" data-dropdown="dropdown" >
       <div class="topbar-inner">
         <div class="container">
-          <h3><a href="#"><: $channel :> – <: $date :></a></h3>
+          <h3><a href="/<: $url_channel :>"><: $channel :> – <: $date :></a></h3>
           <ul class="nav">
             <li><a href="#">&larr; Previous Day</a></li>
             <li><a href="#">View Index</a></li>
@@ -27,7 +27,7 @@
 
 <ol>
 : for $messages.values() -> $message {
-    <li class="<: $message['nick'] :> y2011 m10 d04">
+    <li class="<: $message['nick'] :> <: $message['emote'] :>">
         <time datetime=""><: $message['time'] :></time>
         <cite class="nick <: $message['nick'] :>"><: $message['nick'] :></cite>
         <p class="message"><: $message['message'] :></p>

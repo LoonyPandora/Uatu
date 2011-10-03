@@ -1,11 +1,6 @@
 $(document).ready(function() {
     $('#nick-filter').chosen();
 
-
-
-
-    console.log($('#nick-filter').val());
-
     // Shows messages by all nicks selected
     $('#nick-filter').change(function() {
         

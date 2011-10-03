@@ -4,6 +4,7 @@ html, body {
     background-color: #eee;
     color: #111;
     padding: 0 0 20px 0;
+    background-image: url('../img/bg_tile.gif');
 }
 
 #wrapper {
