@@ -2,6 +2,7 @@ package Uatu;
 use Dancer ':syntax';
 
 use Dancer::Plugin::Database;
+use DateTime;
 
 our $VERSION = '0.1';
 
@@ -28,8 +29,15 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
     my $url_channel = $channel;
     $channel = '#'.$channel;
 
+    # Work out the dates for today / tomorrow
+    my ($year, $month, $day) = split(/-/, $date); 
+    my $dt = DateTime->new( year => $year, month => $month, day => $day );
+    my $tomorrow  = $dt->clone->add( days => 1 )->ymd;
+    my $yesterday = $dt->clone->subtract( days => 1 )->ymd;
+
+
     my $sth = database->prepare(q{
-        SELECT id, TIME(sent) as time, DATE(sent) as date, nick, message,
+        SELECT id, TIME(sent) as time, DATE(sent) as date, sent, nick, message,
             CASE 
                 WHEN emote IS NOT NULL THEN 'emote'
             END AS emote
@@ -42,12 +50,16 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
 
     $sth->execute($channel, $date, $date);
     my $messages = $sth->fetchall_hashref('id');
+    
+    # Does the job of uniq
     my %nicks = map { $_->{'nick'} => 1 } values $messages;
 
     template 'log', {
         channel      => $channel,
         url_channel  => $url_channel,
         date         => $date,
+        tomorrow     => $tomorrow,
+        yesterday    => $yesterday,
         messages     => $messages,
         nicks        => [keys %nicks],
     };
@@ -55,12 +67,20 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
 
 
 
+
+
+
+# Searching is non functional atm
 get qr{ / (\w+) / ([-+\w]+) /? }x  => sub {
     my ($channel, $search) = splat;
 
     # hash is a meta char in urls so it's not used directly
     # add it back here because it does have semantic value
+    my $url_channel = $channel;
     $channel = '#'.$channel;
+
+    # it's a search, with + for spaces. Lets turn them back
+    $search =~ s/\+/ /g;
 
     my $sth = database->prepare(
         q{
@@ -75,9 +95,14 @@ get qr{ / (\w+) / ([-+\w]+) /? }x  => sub {
 
     $sth->execute($channel, "%$search%");
     my $messages = $sth->fetchall_hashref('id');
+    my %nicks = map { $_->{'nick'} => 1 } values $messages;
 
     template 'search', {
-        messages => $messages,
+        channel      => $channel,
+        url_channel  => $url_channel,
+        search       => $search,
+        messages     => $messages,
+        nicks        => [keys %nicks],
     };
 };
 

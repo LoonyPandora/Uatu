@@ -4,13 +4,10 @@
         <div class="container">
           <h3><a href="/<: $url_channel :>"><: $channel :> – <: $date :></a></h3>
           <ul class="nav">
-            <li><a href="#">&larr; Previous Day</a></li>
-            <li><a href="#">View Index</a></li>
-            <li><a href="#">Next Day &rarr;</a></li>
+            <li><a href="/<: $url_channel :>/<: $yesterday :>">&larr; Previous Day</a></li>
+            <li><a href="/<: $url_channel :>">View Index</a></li>
+            <li><a href="/<: $url_channel :>/<: $tomorrow :>">Next Day &rarr;</a></li>
           </ul>
-          <form class="pull-right" action="">
-            <input type="text" placeholder="Search" />
-          </form>
         </div>
       </div>
     </div>
@@ -28,9 +25,9 @@
 <ol>
 : for $messages.values() -> $message {
     <li class="<: $message['nick'] :> <: $message['emote'] :>">
-        <time datetime=""><: $message['time'] :></time>
-        <cite class="nick <: $message['nick'] :>"><: $message['nick'] :></cite>
-        <p class="message"><: $message['message'] :></p>
+        <time datetime="<: $message['sent'] :>"><: $message['time'] :></time>
+        <cite><: $message['nick'] :></cite>
+        <p><: $message['message'] :></p>
     </li>
 : }
 </ol>

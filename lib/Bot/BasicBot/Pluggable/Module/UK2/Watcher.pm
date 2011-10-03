@@ -5,21 +5,45 @@ use base 'Bot::BasicBot::Pluggable::Module::UK2';
 
 =head1 NAME
 
-Bot::BasicBot::Pluggable::Module::UK2::Quote - Misquotage FTW!
+Bot::BasicBot::Pluggable::Module::UK2::Watcher - Watches & Logs all.
 
 =head1 DESCRIPTION
 
-Allows users to add, delete and score quotes from an IRC channel.
+Logs to the db, so the shiny front end web app can read it out.
 
-TODO: Needs moar POD
+It's an IRC logging tool
+
+TODO:
+    Needs moar POD
+    Needs to log responses directed to itself
+    Needs to logs joins and parts
+    Needs to log channel topic
 
 =cut
 
 my $config_file = 'watcher.conf';
 
+# Very helpful
 sub help {
     return qq{Uatu is watching...};
 }
+
+# lowest priority bot, logs things after any other bots respond
+sub fallback {
+    my ($self, $response) = @_;
+
+    $self->_log($response->{channel}, $response->{who}, $response->{body});
+}
+
+# Called when you do a /me
+sub emoted {
+    my ($self, $response, $priority) = @_;
+    return unless $priority == 2;
+    $self->_log($response->{channel}, $response->{who}, $response->{body}, 1);
+}
+
+
+
 
 sub dbh {
     my ($self) = @_;
@@ -36,26 +60,10 @@ sub dbh {
     return $self->{dbh} //= $self->_new_dbh;
 }
 
+
 sub init {
     my ($self) = @_;
     $self->conf($config_file);
-}
-
-
-sub emoted {
-    my ($self, $response, $priority) = @_;
-
-    return unless $priority == 2;
-
-    $self->_log($response->{channel}, $response->{who}, $response->{body}, 1);
-}
-
-
-# lowest priority bot, logs things after any other bots respond
-sub fallback {
-    my ($self, $response) = @_;
-
-    $self->_log($response->{channel}, $response->{who}, $response->{body});
 }
 
 
@@ -66,7 +74,7 @@ sub _log {
         INSERT INTO logs (sent, nick, message, channel, emote)
         VALUES (NOW(), ?, ?, ?, ?)
     });
-    
+
     if (!$sth->execute($nick, $message, $channel, $emote)) {
         return "Unable to log: " . $!;
     }
