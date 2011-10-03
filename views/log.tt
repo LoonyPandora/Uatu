@@ -1,22 +1,36 @@
-<h1>Channel</h1>
+ <div class="topbar-wrapper" style="z-index: 5;">
+    <div class="topbar" data-dropdown="dropdown" >
+      <div class="topbar-inner">
+        <div class="container">
+          <h3><a href="#"><: $channel :> – <: $date :></a></h3>
+          <ul class="nav">
+            <li><a href="#">&larr; Previous Day</a></li>
+            <li><a href="#">View Index</a></li>
+            <li><a href="#">Next Day &rarr;</a></li>
+          </ul>
+          <form class="pull-right" action="">
+            <input type="text" placeholder="Search" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <form class="form-stacked">
-<label for="nick-filter">Filter by nick:</label>
-<select id="nick-filter" multiple="multiple">
+    <label for="nick-filter">Filter by nick:</label>
+    <select id="nick-filter" name="nick-filter" multiple="multiple">
 : for $nicks.sort() -> $nick {
-<option value="<: $nick :>" selected="selected"><: $nick :></option>
+        <option value="<: $nick :>" selected="selected"><: $nick :></option>
 : }
-</select>
+    </select>
 </form>
 
 <ol>
 : for $messages.values() -> $message {
-
     <li class="<: $message['nick'] :> y2011 m10 d04">
         <time datetime=""><: $message['time'] :></time>
         <cite class="nick <: $message['nick'] :>"><: $message['nick'] :></cite>
         <p class="message"><: $message['message'] :></p>
     </li>
-
 : }
 </ol>

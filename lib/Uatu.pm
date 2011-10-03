@@ -43,6 +43,8 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
     my %nicks = map { $_->{'nick'} => 1 } values $messages;
 
     template 'log', {
+        channel  => $channel,
+        date     => $date,
         messages => $messages,
         nicks    => [keys %nicks],
     };

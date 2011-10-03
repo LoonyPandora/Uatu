@@ -52,6 +52,29 @@ p.message    {
 
 
 
+.topbar-wrapper {
+    width: 940px !important;
+    position: relative !important;    
+    height: 40px;
+    margin: 0 0 20px 0;
+}
+
+.topbar-wrapper .topbar {
+    position: absolute;
+    margin: 0 -20px;
+}
+
+.topbar-inner {
+    -webkit-border-radius: 4px;
+    -moz-border-radius:    4px;
+    border-radius:         4px;
+}
+
+
+
+/* Form Stuff
+================================================== */
+
 .form-stacked {
     padding-left: 0;
 }
@@ -64,6 +87,8 @@ select {
 .chzn-container-multi .chzn-choices {
     height: 27px !important;
 }
+
+
 
 
 
