@@ -1,0 +1,41 @@
+Setup
+=====
+
+Include
+
+
+Routing
+=======
+
+/    (Shows all channels logged, and last 5 messages from each)
+
+
+/:channel           (Calendar view of all dates logged? or redirect to today?)
+    /today          (redirects to todays date)
+    /yesterday      (redirects to yesterdays date)
+    /:search        (search can be just a date - or text)
+
+
+/settings    (Settings overview)
+    /:bot    (Can configure every bot from here)
+
+
+
+
+Log viewing pages have a nick filter, done in JS
+
+No pagination on logs, it's only text so small enough amounts of data
+Pagination is well annoying in chat logs.
+Traffic is low enough that it won't be an issue
+
+There is no dialog tag, and thus marking up conversations using description lists
+is not encouraged. So use an ordered list, closest analogue. Rob the style I used for VR:
+
+<ol>
+    <li class=":nick :timestamp" name=":unique_id">
+        <time datetime=":datetime">:time</time>
+        <cite class="nick :nick">:nick</cite> <!-- HTML5 Recommend against this, but spec will likely change -->
+        <p class="message">:message</p>
+    </li>
+</ol>
+
