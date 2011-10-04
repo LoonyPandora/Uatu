@@ -4,6 +4,8 @@ use Dancer ':syntax';
 use Dancer::Plugin::Database;
 use DateTime;
 
+use common::sense;
+
 our $VERSION = '0.1';
 
 get '/' => sub {
@@ -18,23 +20,39 @@ get qr{ / (\w+) /? }x  => sub {
     template 'channel';
 };
 
+get qr{ / (\w+) / today /? }x  => sub {
+    my ($channel) = splat;
 
+    redirect "$channel/".DateTime->now->ymd;
+};
 
 
 get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
     my ($channel, $date) = splat;
 
+    # Work out the dates for today / tomorrow links
+    my ($year, $month, $day) = split(/-/, $date); 
+    my $selected_date = DateTime->new( year => $year, month => $month, day => $day );
+    my $today         = DateTime->today;
+    my $tomorrow      = $selected_date->clone->add( days => 1 );
+    my $yesterday     = $selected_date->clone->subtract( days => 1 );
+
+    # If the "next day" link would be tomorrow (i.e. no logs for that day) - don't create a link
+    my $yesterday_link = $yesterday->ymd;
+    my $tomorrow_link;
+
+    # If it's a date in the future, just punt us to today
+    # Don't show next day link if that would be a day we have no logs for
+    given ( DateTime->compare($selected_date, $today) ) {
+        when ('1') { redirect "$channel/".$today->ymd when '1'; }
+        when ('0') { $tomorrow_link = undef;                    }
+        default    { $tomorrow_link = $tomorrow->ymd;           }
+    }
+
     # hash is a meta char in urls so it's not used directly
     # add it back here because it does have semantic value
     my $url_channel = $channel;
     $channel = '#'.$channel;
-
-    # Work out the dates for today / tomorrow
-    my ($year, $month, $day) = split(/-/, $date); 
-    my $dt = DateTime->new( year => $year, month => $month, day => $day );
-    my $tomorrow  = $dt->clone->add( days => 1 )->ymd;
-    my $yesterday = $dt->clone->subtract( days => 1 )->ymd;
-
 
     my $sth = database->prepare(q{
         SELECT id, TIME(sent) as time, DATE(sent) as date, sent, nick, message,
@@ -58,8 +76,8 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
         channel      => $channel,
         url_channel  => $url_channel,
         date         => $date,
-        tomorrow     => $tomorrow,
-        yesterday    => $yesterday,
+        tomorrow     => $tomorrow_link,
+        yesterday    => $yesterday_link,
         messages     => $messages,
         nicks        => [keys %nicks],
     };

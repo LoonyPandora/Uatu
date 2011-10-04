@@ -6,12 +6,14 @@
           <ul class="nav">
             <li><a href="/<: $url_channel :>/<: $yesterday :>">&larr; Previous Day</a></li>
             <li><a href="/<: $url_channel :>">View Index</a></li>
-            <li><a href="/<: $url_channel :>/<: $tomorrow :>">Next Day &rarr;</a></li>
+            <: if ($tomorrow) { :><li><a href="/<: $url_channel :>/<: $tomorrow :>">Next Day &rarr;</a></li><: } :>
           </ul>
         </div>
       </div>
     </div>
   </div>
+
+: if $nicks.size() > 0 {
 
 <form class="form-stacked">
     <label for="nick-filter">Filter by nick:</label>
@@ -31,3 +33,11 @@
     </li>
 : }
 </ol>
+
+
+: } else { 
+
+<h1>No logs for today :(</h1>
+
+
+: }
