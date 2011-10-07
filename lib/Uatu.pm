@@ -76,6 +76,10 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
         channel      => $channel,
         url_channel  => $url_channel,
         date         => $date,
+        day_name     => $selected_date->day_name,
+        month_name   => $selected_date->month_name,
+        cur_day      => $selected_date->day,
+        ordinal      => _get_ordinal($selected_date->day),
         tomorrow     => $tomorrow_link,
         yesterday    => $yesterday_link,
         messages     => $messages,
@@ -124,6 +128,16 @@ get qr{ / (\w+) / ([-+\w]+) /? }x  => sub {
     };
 };
 
+
+
+
+sub _get_ordinal {
+    $_[0] =~ /^(?:\d+|\d[,\d]+\d+)$/ or return $_[0];
+    return "nd" if $_[0] =~ /(?<!1)2$/;
+    return "rd" if $_[0] =~ /(?<!1)3$/;
+    return "st" if $_[0] =~ /(?<!1)1$/;
+    return "th";
+}
 
 
 true;

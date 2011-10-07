@@ -2,11 +2,12 @@
     <div class="topbar" data-dropdown="dropdown" >
       <div class="topbar-inner">
         <div class="container">
-          <h3><a href="/<: $url_channel :>"><: $channel :> – <: $date :></a></h3>
+          <h3><a href="/<: $url_channel :>">IRC Log</a></h3>
+          <h3><a href="/<: $url_channel :>"><: $channel :></a></h3>
+          <h3><a href="/<: $url_channel :>"><: $day_name :>, <: $month_name :> <: $cur_day :><sup><: $ordinal :></sup></a></h3>
           <ul class="nav">
-            <li><a href="/<: $url_channel :>/<: $yesterday :>">&larr; Previous Day</a></li>
-            <li><a href="/<: $url_channel :>">View Index</a></li>
-            <: if ($tomorrow) { :><li><a href="/<: $url_channel :>/<: $tomorrow :>">Next Day &rarr;</a></li><: } :>
+            <li><a href="/<: $url_channel :>/<: $yesterday :>">&larr; Yesterday</a></li>
+            <: if ($tomorrow) { :><li><a href="/<: $url_channel :>/<: $tomorrow :>">Tomorrow &rarr;</a></li><: } :>
           </ul>
         </div>
       </div>
