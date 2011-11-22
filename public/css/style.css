@@ -13,6 +13,16 @@ html, body {
     margin: 20px auto 0 auto;
 }
 
+h1 {
+    border-bottom: 1px solid #ccc;
+}
+
+h1 small {
+    font-weight: bold;
+    color: #999;
+    margin-left: 0.5em;
+}
+
 
 
 /* Main Navigation
@@ -46,7 +56,7 @@ html, body {
 }
 
 select {
-    width: 940px;
+    width: 460px;
     height: 200px !important;
 }
 
@@ -82,6 +92,10 @@ ol li {
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
+ol li:last-child {
+    border-bottom: none;
+}
+
 time, cite, li p {
     width: 60px;
     margin-right: 10px;
@@ -106,8 +120,8 @@ li p    {
     color:   #ddd;
 }
 
-ul.nav {
-    float: right !important;
+.topbar input {
+    width: 190px;
 }
 
 
@@ -147,6 +161,25 @@ li.emote cite {
 /* Misc Utils (clearfix)
 ================================================== */
 
+
+
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after { clear:both; }
+.clearfix       { zoom:1; }
+
+.clearfix li:before,
+.clearfix li:after {
+    content:"";
+    display:table;
+}
+.clearfix li:after { clear:both; }
+.clearfix li       { zoom:1; }
+
+
 ol:before,
 ol:after {
     content:"";
@@ -162,6 +195,30 @@ ol li:after {
 }
 ol li:after { clear:both; }
 ol li       { zoom:1; }
+
+
+
+
+
+
+
+
+
+
+/* Date Picker
+================================================== */
+
+.nick-filter,
+.datepicker {
+    width: 460px;
+    float: left;
+}
+
+.datepicker {
+    margin-left: 20px;
+    height: 220px;
+    outline: 1px solid red;
+}
 
 
 

@@ -17,4 +17,7 @@ $(document).ready(function() {
         $(location).attr('href',url_clean);
     });
 
+    // Enable the drop-down
+    $('.topbar').dropdown()
+
 });
