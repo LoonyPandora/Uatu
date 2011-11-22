@@ -5,8 +5,8 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="<: $settings.charset :>" />
-    <title>IRC Logs For <: $channel :> – <: $date :> – Uatu The Watcher</title>
-    <meta name="description" content="IRC Logs For <: $channel :> – <: $date :> – Uatu The Watcher">
+    <title>IRC Logs: <: $current_channel :>, <: $day_name :> <: $month_name :> <: $cur_day :><: $ordinal :></title>
+    <meta name="description" content="IRC Logs: <: $day_name :> <: $month_name :> <: $cur_day :><: $ordinal :>">
     <meta name="author" content="James Aitken">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -35,10 +35,10 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle">Channel</a>
               <ul class="dropdown-menu">
-                <li><a href="#">#devs &#x2714;</a></li>
-                <li><a href="#">#uk2dev</a></li>
-                <li><a href="#">#tech</a></li>
-                <li><a href="#">#public</a></li>
+
+: for $all_channels.keys() -> $channel {
+    <li><a href="/<:$all_channels[$channel]['chanpath']:>"><: $channel :> <: if $channel == $current_channel {:> &#x2714; <: } :></a></li>
+: }
               </ul>
             </li>
             <li class="dropdown">
@@ -60,6 +60,7 @@
       </div>
     </div>
   </div>
+
 
 <: raw($content) :>
 

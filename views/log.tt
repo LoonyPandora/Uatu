@@ -1,5 +1,5 @@
 
-<h1><: $channel :> <small><: $day_name :> <: $month_name :> <: $cur_day :><sup><: $ordinal :></sup></small> </h1>
+<h1><: $current_channel :> <small><: $day_name :> <: $month_name :> <: $cur_day :><sup><: $ordinal :></sup></small> </h1>
 
 <div class="sidebar">
 
