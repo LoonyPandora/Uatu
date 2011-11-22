@@ -57,7 +57,7 @@ h1 small {
 
 select {
     margin: 8px 0 0 0;
-    width: 696px;
+    width: 224px;
     height: 152px !important;
 }
 
@@ -73,6 +73,8 @@ select {
 ================================================== */
 
 ol {
+    width: 690px;
+    float: left;
     list-style: none;
     margin: 0;
     padding: 2px 0 2px 0;
@@ -117,7 +119,7 @@ cite {
 }
 
 li p    {
-    width:   760px;
+    width:   500px;
     margin:  0;
     padding: 0;
     color:   #ddd;
@@ -212,24 +214,20 @@ ol li       { zoom:1; }
 ================================================== */
 
 h1 {
-    width: 696px;
+    width: 690px;
     float: left;
 }
 
-.log-meta-container {
-    margin-bottom: 20px;
-}
-
-.nick-filter,
-.datepicker {
-    float: left;
+.sidebar {
+    float: right;
+    margin: 9px 0 0 0;
+    width: 224px;
 }
 
 .datepicker {
     width: 224px;
-    margin: 9px 0 0 0;
-    float: right;
 }
+
 .datepicker th,
 .datepicker td {
     padding: 2px 0 2px 0;
