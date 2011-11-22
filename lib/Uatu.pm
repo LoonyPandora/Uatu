@@ -12,15 +12,7 @@ get '/' => sub {
     template 'index';
 };
 
-
-
 get qr{ / (\w+) /? }x  => sub {
-    my ($channel) = splat;
-
-    template 'channel';
-};
-
-get qr{ / (\w+) / today /? }x  => sub {
     my ($channel) = splat;
 
     redirect "$channel/".DateTime->now->ymd;
