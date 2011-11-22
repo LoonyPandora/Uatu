@@ -46,6 +46,10 @@ h1 small {
     border-radius:         4px;
 }
 
+.topbar-inner input {
+    width: 205px;
+}
+
 
 
 /* Filter by Name bar
@@ -65,6 +69,9 @@ select {
     margin: 8px 0 0 0;
     padding: 4px 4px 2px 2px !important;
     background-image: none;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
 }
 
 
@@ -76,11 +83,11 @@ ol {
     width: 690px;
     float: left;
     list-style: none;
-    margin: 0;
-    padding: 2px 0 2px 0;
+    margin: 0 0 38px 0;
+    padding: 3px 0 3px 0;
     background-color:  #333;
     background-repeat: repeat-x;
-    background-image:  linear-gradient(top, #333333, #222222);
+    background-image: -webkit-linear-gradient(top, #333, #222);
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
@@ -125,11 +132,6 @@ li p    {
     color:   #ddd;
 }
 
-.topbar input {
-    width: 190px;
-}
-
-
 
 /* Chatlog supplementary styles
 ================================================== */
@@ -152,15 +154,15 @@ li.emote cite {
 ================================================== */
 
 .aja      { color: hsla(0, 80%, 65%, 1); }
-.bigpresh { color: hsla(30, 80%, 65%, 1); }
-.sam      { color: hsla(90, 80%, 65%, 1); }
-.ned      { color: hsla(120, 80%, 65%, 1); }
-.jim      { color: hsla(150, 80%, 65%, 1); }
-.ross     { color: hsla(180, 80%, 65%, 1); }
+.irfan    { color: hsla(30, 80%, 65%, 1); }
+.bigpresh { color: hsla(60, 80%, 65%, 1); }
+.adnan    { color: hsla(90, 80%, 65%, 1); }
+.sam      { color: hsla(120, 80%, 65%, 1); }
+.bazza    { color: hsla(150, 80%, 65%, 1); }
+.ned      { color: hsla(180, 80%, 65%, 1); }
 .lisa     { color: hsla(210, 80%, 65%, 1); }
-.damian   { color: hsla(240, 80%, 65%, 1); }
-.bazza    { color: hsla(270, 80%, 65%, 1); }
-.padeath  { color: hsla(330, 80%, 65%, 1); }
+.jim      { color: hsla(240, 80%, 65%, 1); }
+.ross     { color: hsla(270, 80%, 65%, 1); }
 
 
 /* Misc Utils (clearfix)
@@ -220,7 +222,7 @@ h1 {
 
 .sidebar {
     float: right;
-    margin: 9px 0 0 0;
+    margin: 8px 0 0 0;
     width: 224px;
 }
 
@@ -230,35 +232,44 @@ h1 {
 
 .datepicker th,
 .datepicker td {
-    padding: 2px 0 2px 0;
+    padding: 4px 0 4px 0;
+    height: 19px;
     text-align: center;
     border-top-color: #ccc;
     width: 32px;
     font-size: 12px;
 }
 
-.datepicker th {
-    padding: 4px 0 4px 0;
-}
 
 .datepicker a {
     display: block;
     margin: 0 auto 0 auto;
-    height: 20px;
-    line-height: 20px;
     width: 28px;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
+    cursor: pointer;
 }
 
-.datepicker a:hover {
+
+.datepicker .other-month a {
+    color: #999;
 }
+
 
 .datepicker a.current {
     text-decoration: none;
     font-weight: bold;
     color: #f00;
+}
+
+
+#prev-month,
+#next-month {
+    font-weight: bold;
+    display: inline;
+}
+
+#prev-month:hover,
+#next-month:hover {
+    text-decoration: none;
 }
 
 

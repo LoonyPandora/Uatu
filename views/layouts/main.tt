@@ -18,6 +18,7 @@
 
     <script src="/js/jquery-1.7.1.min.js"></script>
     <script src="/js/jquery.chosen.min.js"></script>
+    <script src="/js/jquery.calendar.js"></script>
     <script src="/js/bootstrap-dropdown.js"></script>
     <script src="/js/app.js"></script>
 </head>
@@ -34,7 +35,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle">Channel</a>
               <ul class="dropdown-menu">
-                <li><a href="#">#devs</a></li>
+                <li><a href="#">#devs &#x2714;</a></li>
                 <li><a href="#">#uk2dev</a></li>
                 <li><a href="#">#tech</a></li>
                 <li><a href="#">#public</a></li>
@@ -43,11 +44,11 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle">Settings</a>
               <ul class="dropdown-menu">
-                <li><a href="#">Helvetica</a></li>
+                <li><a href="#">Helvetica &#x2714;</a></li>
                 <li><a href="#">Monospace</a></li>
                 <li><a href="#">Comic Sans</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Light on Dark</a></li>
+                <li><a href="#">Light on Dark &#x2714;</a></li>
                 <li><a href="#">Dark on Light</a></li>
              </ul>
             </li>
@@ -59,8 +60,6 @@
       </div>
     </div>
   </div>
-
-
 
 <: raw($content) :>
 
