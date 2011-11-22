@@ -29,7 +29,7 @@
     <div class="topbar" data-dropdown="dropdown" >
       <div class="topbar-inner">
         <div class="container">
-          <h3><a href="/<: $url_channel :>">Uatu</a></h3>
+          <h3><a href="/">Uatu - The IRC Watcher</a></h3>
           <ul class="nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle">Channel</a>
@@ -51,7 +51,6 @@
                 <li><a href="#">Dark on Light</a></li>
              </ul>
             </li>
-            <li><a href="/<: $url_channel :>/today">Today's Logs</a></li>
           </ul>
           <form class="pull-right" action="">
             <input type="text" placeholder="Search" />

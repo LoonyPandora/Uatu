@@ -1,27 +1,42 @@
 
-<h1><: $channel :> <small><: $day_name :> <: $month_name :> <: $cur_day :><sup><: $ordinal :></small></h1>
+<h1><: $channel :> <small><: $day_name :> <: $month_name :> <: $cur_day :><sup><: $ordinal :></sup> <a href="#">show more</a></small> </h1>
 
-<div class="clearfix">
-    <form class="form-stacked nick-filter">
-        <label for="nick-filter">Filter by nick:</label>
-        <select id="nick-filter" name="nick-filter" multiple="multiple">
-    : for $nicks.sort() -> $nick {
-            <option value="<: $nick :>" selected="selected"><: $nick :></option>
-    : }
-        </select>
-    </form>
-    
-    <div class="datepicker">
-        
-        <ul>
-            </li></li>
-        </ul>
-    </div>
-</div>
+<table class="datepicker">
+    <tr>
+        <th colspan="7">&larr; January 2011 &rarr;</th>
+    </tr>
+    <tr>
+        <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+    </tr>
+        <td><a href="#">1</a></td><td><a href="#">2</a></td><td><a href="#">3</a></td><td><a href="#">4</a></td><td><a href="#">5</a></td><td><a href="#">6</a></td><td><a href="#">7</a></td>
+    <tr>
+        <td><a href="#">88</a></td><td><a href="#" class="current">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td>
+    </tr>
+    <tr>
+        <td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td>
+    </tr>
+    <tr>
+        <td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td>
+    </tr>
+    <tr>
+        <td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td>
+    </tr>
+    <tr>
+        <td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td><td><a href="#">88</a></td>
+    </tr>
+</table>
+
+<form class="form-stacked">
+    <select id="nick-filter" name="nick-filter" multiple="multiple" data-placeholder="Filter By Nick" >
+: for $nicks.sort() -> $nick {
+        <option value="<: $nick :>" selected="selected"><: $nick :></option>
+: }
+    </select>
+</form>
 
 : if $nicks.size() > 0 {
 
-<ol>
+<ol style="clear: both;">
 : for $messages.values() -> $message {
     <li class="<: $message['nick'] :> <: $message['emote'] :>">
         <time datetime="<: $message['sent'] :>"><: $message['time'] :></time>
