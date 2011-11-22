@@ -5,10 +5,15 @@ $(document).ready(function() {
     $('#nick-filter').change(function() {
         // Hide them all
         $('ol li').hide();
-        $.each($('#nick-filter').val(), function(key, value) {
-            // And turn the ones we want back on.
-            $('ol li.'+value).show();
-        });
+
+        // If its the last nick, don't try to iterate over them all
+        if ($('#nick-filter').val()) {
+            $.each($('#nick-filter').val(), function(key, value) {
+                // And turn the ones we want back on.
+                $('ol li.'+value).show();
+            });
+        
+        }
     });
 
     // non functional atm, but stubbed anyway.
