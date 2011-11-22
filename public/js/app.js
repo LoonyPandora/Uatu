@@ -78,9 +78,11 @@ function prev_month() {
 function month_nav_bind() {
     $("#next-month").click(function() {
         next_month();
+        return false;
     });
 
     $("#prev-month").click(function() {
         prev_month();
+        return false;
     });
 }
