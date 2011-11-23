@@ -54,7 +54,7 @@
             </li>
           </ul>
           <form class="pull-right" action="">
-            <input type="text" placeholder="Search" />
+            <input type="text" placeholder="Search <: $current_channel :>" />
           </form>
         </div>
       </div>
