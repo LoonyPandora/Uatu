@@ -15,7 +15,7 @@ get '/' => sub {
             MONTHNAME(MIN(sent)) AS first_month, DAYNAME(MIN(sent)) AS first_day, DAYOFMONTH(MIN(sent)) AS first_date,
             COUNT(*) AS total,
             channel
-        FROM LOGS
+        FROM logs
         GROUP BY channel
         ORDER BY channel ASC
         LIMIT 99
@@ -79,7 +79,7 @@ post '/search' => sub {
     # since the above query has a where clause limiting it to one
     my $chan_sth = database->prepare(q{
         SELECT MAX(sent) AS lastlog, MIN(sent) AS firstlog, COUNT(*) AS total, channel
-        FROM LOGS
+        FROM logs
         GROUP BY channel
         ORDER BY channel ASC
         LIMIT 99
