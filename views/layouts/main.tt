@@ -37,18 +37,22 @@
               <ul class="dropdown-menu">
 
 : for $all_channels.keys() -> $channel {
-    <li><a href="/<:$all_channels[$channel]['chanpath']:>"><: $channel :> <: if $channel == $current_channel {:> &#x2714; <: } :></a></li>
+    <li>
+        <a href="/<:$all_channels[$channel]['chanpath']:>"><: $channel :>
+            <: if $channel == $current_channel {:><span class="menu-selected">&#x2714;</span> <: } :>
+        </a>
+    </li>
 : }
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle">Settings</a>
               <ul class="dropdown-menu">
-                <li><a href="#">Helvetica &#x2714;</a></li>
+                <li><a href="#">Helvetica <span class="menu-selected">&#x2714;</span></a></li>
                 <li><a href="#">Monospace</a></li>
                 <li><a href="#">Comic Sans</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Light on Dark &#x2714;</a></li>
+                <li><a href="#">Light on Dark <span class="menu-selected">&#x2714;</span></a></li>
                 <li><a href="#">Dark on Light</a></li>
              </ul>
             </li>

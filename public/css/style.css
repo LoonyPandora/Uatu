@@ -50,6 +50,10 @@ h1 small {
     width: 205px;
 }
 
+.menu-selected {
+    float: right;
+}
+
 
 
 /* Filter by Name bar
