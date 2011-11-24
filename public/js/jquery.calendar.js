@@ -1,85 +1,49 @@
 (function($) { 
    
     function calendarWidget(el, params) { 
-        
-        var now   = new Date();
-        var thismonth = now.getMonth();
-        var thisyear  = now.getYear() + 1900;
-        
-        var opts = {
-            month: thismonth,
-            year: thisyear
+
+        var o = {
+            day_names:   ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            month_names: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         };
-        
-        $.extend(opts, params);
-        
-        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        month = i = parseInt(opts.month);
-        year = parseInt(opts.year);
-        var m = 0;
-        var table = '';
-            table += ('<table class="datepicker" cellspacing="0">');
-            
-            table += '<tr>';            
 
-            table += ('<th colspan="2"><a href="#" id="prev-month">&larr;</a></th>');
+        $.extend(o, params);
 
-            table += ('<th colspan="3" id="current-month" data-year="'+year+'" data-month="'+month+'">'+monthNames[month]+' '+year+'</th>');
+        // To show 6 rows of 7 days, we need to calculate the 42 days
+        // that wholly contain our current month
+        var start_date = new Date(params.year, params.month, 1);
 
-            table += ('<th colspan="2"><a href="#" id="next-month">&rarr;</a></th>');
+        // Find the Sunday closest to the 1st of our selected month
+        start_date.setDate(start_date.getDate()-start_date.getDay());
 
-            table += '</tr>';
+        // Show the following 42 days from our start date. 6 rows of 7 days each
+        var table = '<table class="datepicker"><tr>';
+        table += '<th colspan="2"><a href="#" id="prev-month">&larr;</a></th>';
+        table += '<th colspan="3" id="current-month" data-year="'+o.year+'" data-month="'+o.month+'">'+o.month_names[o.month]+' '+o.year+'</th>';
+        table += '<th colspan="2"><a href="#" id="next-month">&rarr;</a></th>';
+        table += '</tr><tr>';
 
-            table += '<tr>';            
-            for (d=0; d<7; d++) {
-                table += '<th class="weekday">' + dayNames[d] + '</th>';
-            }
-            
-            table += '</tr>';
-        
-            var days = getDaysInMonth(month,year);
-            var firstDayDate=new Date(year,month,1);
-            var firstDay=firstDayDate.getDay();
-            
-            var prev_days = getDaysInMonth(month,year);
-            var firstDayDate=new Date(year,month,1);
-            var firstDay=firstDayDate.getDay();
-            
-            var prev_m = month == 0 ? 11 : month-1;
-            var prev_y = prev_m == 11 ? year - 1 : year;
-            var prev_days = getDaysInMonth(prev_m, prev_y);
-            firstDay = (firstDay == 0 && firstDayDate) ? 7 : firstDay;
-    
-            var i = 0;
-            for (j=0;j<42;j++){
-              
-              if ((j<firstDay)){
-                table += ('<td class="other-month"><a class="day">'+ (prev_days-firstDay+j+1) +'</a></td>');
-              } else if ((j>=firstDay+getDaysInMonth(month,year))) {
-                i = i+1;
-                table += ('<td class="other-month"><a class="day">'+ i +'</a></td>');             
-              }else{
-                table += ('<td class="current-month day'+(j-firstDay+1)+'"><a class="day">'+(j-firstDay+1)+'</a></td>');
-              }
-              if (j%7==6)  table += ('</tr>');
+        // Each individual day
+        for (d=0; d<42; d++) {
+            if (d % 7 == 0 && d != 41 && d != 0) {
+                table += '</tr><tr>';
             }
 
-            table += ('</table>');
+            var td_class = 'current-month';
+            if (start_date.getMonth() != params.month) {
+                td_class = 'other-month';
+            }
 
+            table += '<td class='+ td_class +'><a>'+ start_date.getDate() +'</a></td>';
+            start_date.setDate(start_date.getDate() + 1);
+        }
+
+        table += '</tr></table>';
+
+        // Replace the elements HTML with our swanky new table
         el.html(table);
     }
-    
-    function getDaysInMonth(month,year)  {
-        var daysInMonth=[31,28,31,30,31,30,31,31,30,31,30,31];
-        if ((month==1)&&(year%4==0)&&((year%100!=0)||(year%400==0))){
-          return 29;
-        }else{
-          return daysInMonth[month];
-        }
-    }
-    
-    
+
     // jQuery plugin initialisation
     $.fn.calendarWidget = function(params) {    
         calendarWidget(this, params);        
