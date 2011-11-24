@@ -73,7 +73,7 @@ post '/search' => sub {
     my $messages = $sth->fetchall_hashref('id');
 
     # Does the job of uniq
-    my %nicks = map { $_->{'nick'} => 1 } values $messages;
+    my %nicks = map { $_->{'nick'} => 1 } values %$messages;
 
     # We need another query to get all the channels
     # since the above query has a where clause limiting it to one
@@ -149,7 +149,7 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
     my $messages = $log_sth->fetchall_hashref('id');
     
     # Does the job of uniq
-    my %nicks = map { $_->{nick} => 1 } values $messages;
+    my %nicks = map { $_->{nick} => 1 } values %$messages;
 
     # We need another query to get all the channels
     # since the above query has a where clause limiting it to one
