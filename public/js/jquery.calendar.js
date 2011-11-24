@@ -1,3 +1,14 @@
+/*
+ * jQuery Calendar
+ * Version 0.1.0
+ * https://github.com/LoonyPandora
+ *
+ * Does a dead simple calendar. Name subject to change
+ * 
+ * Copyright (c) 2011 James Aitken (loonypandora.co.uk)
+ * Dual licensed under the MIT and GPL licenses.
+*/
+
 (function($) {
     function calendarWidget(element, params) {
         // Default to todays date if we don't pass anything
