@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="<: $settings.charset :>" />
-    <title>IRC Logs: <: $current_channel :>, <: $day_name :> <: $month_name :> <: $cur_day :><: $ordinal :></title>
+    <title>IRC Logs <: $current_channel :> <: $day_name :> <: $month_name :> <: $cur_day :><: $ordinal :></title>
     <meta name="description" content="IRC Logs: <: $day_name :> <: $month_name :> <: $cur_day :><: $ordinal :>">
     <meta name="author" content="James Aitken">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,7 +64,6 @@
       </div>
     </div>
   </div>
-
 
 <: raw($content) :>
 

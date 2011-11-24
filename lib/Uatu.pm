@@ -48,16 +48,26 @@ post '/search' => sub {
     # it's a search, with + for spaces. Lets turn them back
     $search =~ s/\+/ /g;
 
-    my $sth = database->prepare(
-        q{
-            SELECT id, TIME(sent) as time, DATE(sent) as date, nick, message
-            FROM logs
-            WHERE channel = ?
-            AND message LIKE ?
-            ORDER BY sent DESC
-            LIMIT 9999
-        }
-    );
+    my $sth = database->prepare(q{
+        SELECT id, TIME(sent) as time, DATE(sent) as date, sent, nick, message,
+            CASE 
+                WHEN emote IS NOT NULL THEN 'emote'
+            END AS emote,
+            CASE 
+                WHEN presence IS NOT NULL THEN 'presence'
+            END AS presence,
+            CASE 
+                WHEN topic IS NOT NULL THEN 'topic'
+            END AS topic,
+            CASE 
+                WHEN kick IS NOT NULL THEN 'kick'
+            END AS kick
+        FROM logs
+        WHERE channel = ?
+        AND sent BETWEEN TIMESTAMP(?) AND TIMESTAMPADD(DAY, 1, ?)
+        ORDER BY sent ASC
+        LIMIT 9999
+    });
 
     $sth->execute($channel, "%$search%");
     my $messages = $sth->fetchall_hashref('id');
@@ -118,12 +128,21 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
         SELECT id, TIME(sent) as time, DATE(sent) as date, sent, nick, message,
             CASE 
                 WHEN emote IS NOT NULL THEN 'emote'
-            END AS emote
+            END AS emote,
+            CASE 
+                WHEN presence IS NOT NULL THEN 'presence'
+            END AS presence,
+            CASE 
+                WHEN topic IS NOT NULL THEN 'topic'
+            END AS topic,
+            CASE 
+                WHEN kick IS NOT NULL THEN 'kick'
+            END AS kick
         FROM logs
         WHERE channel = ?
         AND sent BETWEEN TIMESTAMP(?) AND TIMESTAMPADD(DAY, 1, ?)
-        ORDER BY sent DESC
-        LIMIT 999
+        ORDER BY sent ASC
+        LIMIT 9999
     });
 
     $log_sth->execute($channel, $date, $date);

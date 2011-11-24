@@ -21,8 +21,8 @@
 : if $nicks.size() > 0 {
 
 <ol>
-: for $messages.values() -> $message {
-    <li class="<: $message['nick'] :> <: $message['emote'] :>">
+: for $messages.values().sort() -> $message {
+    <li class="<: $message['nick'] :> <: $message['emote'] :> <: $message['kick'] :> <: $message['topic'] :> <: $message['presence'] :>">
         <time datetime="<: $message['sent'] :>"><: $message['time'] :></time>
         <cite><: $message['nick'] :></cite>
         <p><: $message['message'] :></p>

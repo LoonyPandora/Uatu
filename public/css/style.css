@@ -172,18 +172,6 @@ li p    {
 }
 
 
-/* Chatlog supplementary styles
-================================================== */
-
-li.emote cite,
-li.emote .message {
-    font-style: italic;
-}
-
-li.emote cite {
-    text-align: right;
-}
-
 
 
 
@@ -243,6 +231,53 @@ ol li:after { clear:both; }
 ol li       { zoom:1; }
 
 
+
+
+
+/* Chatlog supplementary styles
+================================================== */
+
+li.emote cite,
+li.emote p,
+li.presence cite,
+li.presence p,
+li.topic cite,
+li.topic p,
+li.kick cite,
+li.kick p {
+    font-style: italic;
+}
+
+li.emote cite,
+li.presence cite,
+li.topic cite,
+li.kick cite {
+    text-align: right;
+}
+
+li.presence cite,
+li.presence p {
+    color:   #666;
+}
+
+li.topic cite,
+li.topic p,
+li.emote cite,
+li.emote p {
+    color: inherit;
+}
+
+li.topic cite,
+li.topic p {
+    color: #eee;
+    text-decoration: underline
+}
+
+li.kick cite,
+li.kick p {
+    color: #eee;
+    font-weight: bold;
+}
 
 
 
