@@ -25,13 +25,16 @@ $(document).ready(function() {
     // Enable the drop-down
     $('.topbar').dropdown()
 
+    // Work out the month we are currently on, so we can show the right calendar
+    var pathname = window.location.pathname.split('/'),
+        date     = pathname[2].split('-');
+
     $("#calendar").calendarWidget({
-        month: 9,
-        year: 2011
+        year: date[0],
+        month: date[1] - 1
     });
  
     month_nav_bind();
-          
 });
 
 
