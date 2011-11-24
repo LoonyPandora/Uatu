@@ -1,7 +1,5 @@
-(function($) { 
-   
-    function calendarWidget(el, params) { 
-
+(function($) {
+    function calendarWidget(element, params) {
         // Default to todays date if we don't pass anything
         var now = new Date();
         var o = {
@@ -45,19 +43,26 @@
                 td_class = 'other-month';
             }
 
-            table += '<td class='+ td_class +'><a>'+ startDate.getDate() +'</a></td>';
+            // WTF JavaScript? Y U NO HAVE SPRINTF?
+            // Also, Months are zero indexed, but dates start at 1, hence the parseInt() Go figure.
+            var paddedDate  = (startDate.getDate() < 10) ? ("0" + startDate.getDate()) : startDate.getDate(),
+                paddedMonth = (startDate.getMonth() < 9) ? ("0" + parseInt(startDate.getMonth() + 1) ) : startDate.getMonth() + 1;
+
+            table += '<td class='+ td_class +'>';
+            table += '<a href="'+ startDate.getFullYear() +'-'+ paddedMonth +'-'+ paddedDate +'">'+ startDate.getDate() +'</a>';
+            table += '</td>';
             startDate.setDate(startDate.getDate() + 1);
         }
 
         table += '</tr></table>';
 
         // Replace the elements HTML with our swanky new table
-        el.html(table);
+        element.html(table);
     }
 
-    // jQuery plugin initialisation
-    $.fn.calendarWidget = function(params) {    
-        calendarWidget(this, params);        
+    // Make it a jQuery plugin
+    $.fn.calendarWidget = function(params) {
+        calendarWidget(this, params);
         return this; 
     }; 
 
