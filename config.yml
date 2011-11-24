@@ -13,11 +13,11 @@ engines:
 plugins:
   Database:
     driver:   'mysql'
-    database: 'uatu'
+    database: 'irc'
     host:     'localhost'
     port:     3306
-    username: 'vegrev'
-    password: 'password'
+    username: 'ircbots'
+    password: 'wibble'
     dbi_params:
         RaiseError: 1
         AutoCommit: 1
