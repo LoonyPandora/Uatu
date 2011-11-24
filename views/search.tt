@@ -1,38 +1,32 @@
- <div class="topbar-wrapper" style="z-index: 5;">
-    <div class="topbar" data-dropdown="dropdown" >
-      <div class="topbar-inner">
-        <div class="container">
-          <h3><a href="/<: $url_channel :>"><: $channel :> – Search</a></h3>
-          <ul class="nav">
-            <li><a href="#">&larr; Previous Day</a></li>
-            <li><a href="#">View Index</a></li>
-            <li><a href="#">Next Day &rarr;</a></li>
-          </ul>
-          <form class="pull-right" action="">
-            <input type="text" placeholder="Search" />
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
-<h1>Search Results: <: $search :></h1>
+<h1>Search Results <small><: $search :></small></h1>
 
-<form class="form-stacked">
-    <label for="nick-filter">Filter by nick:</label>
-    <select id="nick-filter" name="nick-filter" multiple="multiple">
+<div class="sidebar">
+    <form class="form-stacked">
+        <label for="nick-filter">Filter By Nick</label>
+        <select id="nick-filter" name="nick-filter" multiple="multiple" data-placeholder="Filter By Nick" >
 : for $nicks.sort() -> $nick {
         <option value="<: $nick :>" selected="selected"><: $nick :></option>
 : }
-    </select>
-</form>
+        </select>
+    </form>
+</div>
+
+
+: if $nicks.size() > 0 {
 
 <ol>
 : for $messages.values() -> $message {
     <li class="<: $message['nick'] :> <: $message['emote'] :>">
-        <time datetime=""><: $message['time'] :></time>
-        <cite class="nick <: $message['nick'] :>"><: $message['nick'] :></cite>
-        <p class="message"><: $message['message'] :></p>
+        <time datetime="<: $message['sent'] :>"><: $message['time'] :></time>
+        <cite><: $message['nick'] :></cite>
+        <p><: $message['message'] :></p>
     </li>
 : }
 </ol>
+
+: } else { 
+
+<h2>No results found :(</h2>
+
+: }

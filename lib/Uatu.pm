@@ -9,8 +9,88 @@ use common::sense;
 our $VERSION = '0.1';
 
 get '/' => sub {
-    template 'index';
+    my $chan_sth = database->prepare(q{
+        SELECT DISTINCT channel
+        FROM logs
+        ORDER BY channel ASC
+        LIMIT 99
+    });
+
+    $chan_sth->execute();
+    my $all_channels = $chan_sth->fetchall_hashref('channel');
+
+    for (values %$all_channels) {
+        my $channel_path = $_->{channel};
+        $channel_path =~ s/#//;
+
+       $_->{chanpath} = $channel_path;
+    }
+
+    template 'index', {
+        all_channels     => $all_channels,
+    };
 };
+
+
+# Searching is non functional atm
+post '/search' => sub {
+    my $search  = params->{search};
+    my $channel = params->{channel};
+
+    my $chanpath = $channel;
+    $chanpath =~ s/#//;
+
+    # it's a search, with + for spaces. Lets turn them back
+    $search =~ s/\+/ /g;
+
+    my $sth = database->prepare(
+        q{
+            SELECT id, TIME(sent) as time, DATE(sent) as date, nick, message
+            FROM logs
+            WHERE channel = ?
+            AND message LIKE ?
+            ORDER BY sent DESC
+            LIMIT 9999
+        }
+    );
+
+    $sth->execute($channel, "%$search%");
+    my $messages = $sth->fetchall_hashref('id');
+
+    # Does the job of uniq
+    my %nicks = map { $_->{'nick'} => 1 } values $messages;
+
+
+
+    # We need another query to get all the channels
+    # since the above query has a where clause limiting it to one
+    my $chan_sth = database->prepare(q{
+        SELECT DISTINCT channel
+        FROM logs
+        ORDER BY channel ASC
+        LIMIT 99
+    });
+
+    $chan_sth->execute();
+    my $all_channels = $chan_sth->fetchall_hashref('channel');
+
+    for (values %$all_channels) {
+        my $channel_path = $_->{channel};
+        $channel_path =~ s/#//;
+
+       $_->{chanpath} = $channel_path;
+    }
+
+    template 'search', {
+        all_channels     => $all_channels,
+        current_channel  => $channel,
+        current_chanpath => $chanpath,
+        search       => $search,
+        messages     => $messages,
+        nicks        => [keys %nicks],
+    };
+};
+
 
 get qr{ / (\w+) /? }x  => sub {
     my ($channel) = splat;
@@ -84,43 +164,6 @@ get qr{ / (\w+) / (\d{4}-\d{2}-\d{2}) /? }x  => sub {
 
 
 
-
-
-# Searching is non functional atm
-get qr{ / (\w+) / ([-+\w]+) /? }x  => sub {
-    my ($channel, $search) = splat;
-
-    # hash is a meta char in urls so it's not used directly
-    # add it back here because it does have semantic value
-    my $url_channel = $channel;
-    $channel = '#'.$channel;
-
-    # it's a search, with + for spaces. Lets turn them back
-    $search =~ s/\+/ /g;
-
-    my $sth = database->prepare(
-        q{
-            SELECT id, TIME(sent) as time, DATE(sent) as date, nick, message
-            FROM logs
-            WHERE channel = ?
-            AND message LIKE ?
-            ORDER BY sent DESC
-            LIMIT 9999
-        }
-    );
-
-    $sth->execute($channel, "%$search%");
-    my $messages = $sth->fetchall_hashref('id');
-    my %nicks = map { $_->{'nick'} => 1 } values $messages;
-
-    template 'search', {
-        channel      => $channel,
-        url_channel  => $url_channel,
-        search       => $search,
-        messages     => $messages,
-        nicks        => [keys %nicks],
-    };
-};
 
 
 
