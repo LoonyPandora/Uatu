@@ -23,6 +23,41 @@ h1 small {
     margin-left: 0.5em;
 }
 
+.block {
+    width:      215px;
+    margin:     10px;
+    float:      left;
+    background: #fcfcfc;
+    position:   relative;
+    overflow:   hidden;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+       -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+            box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+}
+
+.block h1 {
+    border: none;
+    color: #0069D6;
+}
+
+.block a {
+    padding: 20px;
+    display: block;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+}
+
+.block a:hover {
+    text-decoration: none;
+    background-color: #f6f6f6;
+}
+
+
+
 
 
 /* Main Navigation

@@ -1,0 +1,11 @@
+
+: for $all_channels.keys() -> $channel {
+    <div class="block">
+        <a href="/<:$all_channels[$channel]['chanpath']:>">
+            <h1><: $channel :></h1>
+            <h4>Messages: <:$all_channels[$channel]['total']:></h4>
+            <h4>First: <:$all_channels[$channel]['first_month']:> <:$all_channels[$channel]['first_date']:> </h4>
+            <h4>Latest: <:$all_channels[$channel]['last_month']:> <:$all_channels[$channel]['last_date']:> </h4>
+        </a>
+    </div>
+: }

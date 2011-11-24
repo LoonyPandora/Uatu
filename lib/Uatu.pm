@@ -10,8 +10,13 @@ our $VERSION = '0.1';
 
 get '/' => sub {
     my $chan_sth = database->prepare(q{
-        SELECT DISTINCT channel
-        FROM logs
+        SELECT
+            MONTHNAME(MAX(sent)) AS last_month, DAYNAME(MAX(sent)) AS last_day, DAYOFMONTH(MAX(sent)) AS last_date,
+            MONTHNAME(MIN(sent)) AS first_month, DAYNAME(MIN(sent)) AS first_day, DAYOFMONTH(MIN(sent)) AS first_date,
+            COUNT(*) AS total,
+            channel
+        FROM LOGS
+        GROUP BY channel
         ORDER BY channel ASC
         LIMIT 99
     });
@@ -23,11 +28,11 @@ get '/' => sub {
         my $channel_path = $_->{channel};
         $channel_path =~ s/#//;
 
-       $_->{chanpath} = $channel_path;
+        $_->{chanpath} = $channel_path;
     }
 
     template 'index', {
-        all_channels     => $all_channels,
+        all_channels => $all_channels,
     };
 };
 
@@ -60,13 +65,12 @@ post '/search' => sub {
     # Does the job of uniq
     my %nicks = map { $_->{'nick'} => 1 } values $messages;
 
-
-
     # We need another query to get all the channels
     # since the above query has a where clause limiting it to one
     my $chan_sth = database->prepare(q{
-        SELECT DISTINCT channel
-        FROM logs
+        SELECT MAX(sent) AS lastlog, MIN(sent) AS firstlog, COUNT(*) AS total, channel
+        FROM LOGS
+        GROUP BY channel
         ORDER BY channel ASC
         LIMIT 99
     });
@@ -78,7 +82,7 @@ post '/search' => sub {
         my $channel_path = $_->{channel};
         $channel_path =~ s/#//;
 
-       $_->{chanpath} = $channel_path;
+        $_->{chanpath} = $channel_path;
     }
 
     template 'search', {
