@@ -26,7 +26,7 @@ $(document).ready(function() {
     $('.topbar').dropdown()
 
     $("#calendar").calendarWidget({
-        month: 10,
+        month: 9,
         year: 2011
     });
  
